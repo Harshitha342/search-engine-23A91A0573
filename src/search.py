@@ -1,10 +1,16 @@
 import json
+import os
 import numpy as np
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
 INDEX_DIR = "index"
 MODEL_NAME = "all-MiniLM-L6-v2"
+
+if not os.path.exists("index/embeddings.npy") or not os.path.exists("index/metadata.json"):
+    raise FileNotFoundError(
+        "Index files not found. Please run src/index_documents.py first."
+    )
 
 def search(query, top_k=5):
     # Load index
